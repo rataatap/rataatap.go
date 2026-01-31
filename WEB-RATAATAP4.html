@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rataatap Studio | Architecture & Interior</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --black: #0b0b0b;
+      --dark: #141414;
+      --gray: #1f1f1f;
+      --light: #f5f5f5;
+      --gold: #c9a227;
+
+      /* GANTI GAMBAR HERO DI SINI SAJA */
+      /* Contoh format JPG: simpan file sebagai hero.jpg di folder yang sama */
+      /* Background utama (hero penuh layar) */
+      --hero-image: url(ag.png);
+
+      /* Background khusus di belakang teks (bisa beda gambar) */
+      --hero-text-bg: url('hero-text.jpg');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--light);
+    }
+
+    /* NAVBAR */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #222;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+
+    nav h1 {
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    nav h1 span {
+      color: var(--gold);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #ccc;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      /* GANTI GAMBAR HERO DI SINI (cukup ganti URL di bawah dengan gambar kamu sendiri) */
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), var(--hero-image);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      /* Kembali ke gaya clean (tanpa frame / box background) */
+      background: none;
+      border: none;
+      border-radius: 0;
+      backdrop-filter: none;
+    }
+    }
+
+    .hero h2 {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .hero h2 span {
+      color: var(--gold);
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 20px 0 40px;
+      color: #bbb;
+    }
+
+    .btn {
+      padding: 14px 36px;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 2px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    section {
+      padding: 100px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .section-title span {
+      color: var(--gold);
+    }
+
+    /* ABOUT */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about img {
+      width: 100%;
+      border-radius: 8px;
+      filter: grayscale(20%);
+    }
+
+    /* PORTFOLIO */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.4s;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.1);
+      filter: brightness(60%);
+    }
+
+    .portfolio-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      opacity: 0;
+      transition: 0.4s;
+    }
+
+    .portfolio-item:hover .portfolio-caption {
+      opacity: 1;
+    }
+
+    .portfolio-caption h4 {
+      color: var(--gold);
+    }
+
+    /* TEAM */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .team-card {
+      background: var(--dark);
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      border: 1px solid #222;
+    }
+
+    .team-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 2px solid var(--gold);
+    }
+
+    .team-card h4 span {
+      color: var(--gold);
+      font-weight: 400;
+      font-size: 14px;
+      display: block;
+    }
+
+    /* CONTACT */
+    .contact-box {
+      background: var(--dark);
+      padding: 50px;
+      border-radius: 20px;
+      border: 1px solid #222;
+      text-align: center;
+    }
+
+    .socials {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .socials a {
+      color: var(--gold);
+      font-size: 22px;
+      transition: 0.3s;
+    }
+
+    .socials a:hover {
+      transform: translateY(-5px);
+      color: #fff;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #050505;
+      text-align: center;
+      padding: 30px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    @media(max-width: 768px) {
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h2 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <h1>RATAATAP <span>STUDIO</span></h1>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h2>Designing <span>Timeless</span><br>Architecture & Interior</h2>
+    <p>Kami menghadirkan solusi desain arsitektur dan interior yang modern, elegan, dan fungsional untuk kebutuhan hunian dan komersial.</p>
+    <a href="#portfolio" class="btn">VIEW PORTFOLIO</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container about">
+    <div>
+      <h2 class="section-title">About <span>Us</span></h2>
+      <p>Rataatap Studio adalah studio arsitektur dan interior yang berfokus pada kualitas desain, detail, dan karakter ruang. Kami percaya bahwa setiap proyek memiliki cerita unik yang harus diterjemahkan ke dalam bentuk arsitektur yang berkelas.</p>
+    </div>
+    <img src="G7 (2).png" alt="Studio">
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="container">
+    <h2 class="section-title">Our <span>Portfolio</span></h2>
+    <p style="color:#aaa; max-width:720px">Klik pada gambar untuk melihat detail view: front, angle, dan top view.</p>
+
+    <div class="portfolio-grid">
+      <!-- ITEM 1 -->
+      <div class="portfolio-item" data-images="G2.jpeg, G1.jpeg, G3.jpeg">
+        <img src="G1.jpeg" alt="Project 1">
+        <div class="portfolio-caption">
+          <h4>Modern Classic</h4>
+          <p>Project Mr.A </p>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="portfolio-item" data-images="G5.jpeg, G4.jpeg, G6.jpeg">
+        <img src="G5.jpeg" alt="Project 2">
+        <div class="portfolio-caption">
+          <h4>Scandinavian Style</h4>
+          <p>Project Mrs.D</p>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="portfolio-item" data-images="A6.jpg, A5.jpg, project3-top.jpg">
+        <img src="A5.png" alt="Project 3">
+        <div class="portfolio-caption">
+          <h4>Cafe Interior</h4>
+          <p>Project Mr.H</p>
+        </div>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="portfolio-item" data-images="A2.jpg, A1.jpg, A4.jpg">
+        <img src="A1.png" alt="Project 4">
+        <div class="portfolio-caption">
+          <h4>Industrial Style</h4>
+          <p>Project Mrs.K</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL GALLERY -->
+<div id="galleryModal" class="gallery-modal">
+  <span class="close-btn">&times;</span>
+  <img id="galleryImage" src="" alt="Preview">
+  <div class="gallery-controls">
+    <button id="prevBtn">&#10094;</button>
+    <button id="nextBtn">&#10095;</button>
+  </div>
+</div>
+
+<style>
+  .gallery-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 2000;
+  }
+
+  .gallery-modal img {
+    max-width: 85%;
+    max-height: 75vh;
+    border-radius: 16px;
+    border: 1px solid #222;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 40px;
+    color: #c9a227;
+    cursor: pointer;
+  }
+
+  .gallery-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+  }
+
+  .gallery-controls button {
+    background: transparent;
+    border: 1px solid #c9a227;
+    color: #c9a227;
+    padding: 10px 18px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  .gallery-controls button:hover {
+    background: #c9a227;
+    color: #000;
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll('.portfolio-item');
+  const modal = document.getElementById('galleryModal');
+  const modalImg = document.getElementById('galleryImage');
+  const closeBtn = document.querySelector('.close-btn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let images = [];
+  let index = 0;
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      images = item.dataset.images.split(',').map(i => i.trim());
+      index = 0;
+      modal.style.display = 'flex';
+      modalImg.src = images[index];
+    });
+  });
+
+  closeBtn.onclick = () => modal.style.display = 'none';
+
+  nextBtn.onclick = () => {
+    index = (index + 1) % images.length;
+    modalImg.src = images[index];
+  };
+
+  prevBtn.onclick = () => {
+    index = (index - 1 + images.length) % images.length;
+    modalImg.src = images[index];
+  };
+</script>
+
+<section id="team">
+  <div class="container">
+    <h2 class="section-title">Our <span>Team</span></h2>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="fotozidan.jpg.jpeg" alt="Team">
+        <h4><span>Head Office</span></h4>
+      </div>
+
+      <div class="team-card">
+        <img src="fotoeko.jpg.jpeg" alt="Team">
+        <h4><span>Architect</span></h4>
+      </div>
+
+      <div class="team-card">
+        <img src="fotoilham.jpg.jpeg" alt="Team">
+        <h4><span>Civil Engineering</span></h4>
+      </div>
+
+      <div class="team-card">
+        <img src="fotoridwan.jpg.jpeg" alt="Team">
+        <h4><span>Interior Designer</span></h4>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <h2 class="section-title">Contact <span>Us</span></h2>
+      <p>Siap berkolaborasi dengan proyek Anda? Hubungi kami melalui sosial media berikut.</p>
+
+      <div class="socials">
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://instagram.com/rataatap" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@rataatap.studio" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.youtube.com/results?search_query=rataatap+studio" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Rataatap Studio. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
